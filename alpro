@@ -1,0 +1,100 @@
+import tkinter as tk
+from tkinter import messagebox
+from math import pi
+
+def calculate_volume():
+    shape = shape_var.get()
+
+    try:
+        if shape == "Kubus":
+            side_length = float(side_entry.get())
+            volume = side_length ** 3
+        elif shape == "Tabung":
+            radius = float(radius_entry.get())
+            height = float(height_entry.get())
+            volume = pi * radius ** 2 * height
+        elif shape == "Balok":
+            length = float(length_entry.get())
+            width = float(width_entry.get())
+            height = float(height_entry.get())
+            volume = length * width * height
+        elif shape == "Bola":
+            radius = float(radius_entry.get())
+            volume = 4 / 3 * pi * radius ** 3
+
+        result_label.config(text="Volume: " + str(volume))
+    except ValueError:
+        messagebox.showerror("nda jelas", "Masukkan angka yang valid!")
+
+def clear_fields():
+    side_entry.delete(0, tk.END)
+    radius_entry.delete(0, tk.END)
+    length_entry.delete(0, tk.END)
+    width_entry.delete(0, tk.END)
+    height_entry.delete(0, tk.END)
+    result_label.config(text="")
+
+# Membuat jendela utama
+window = tk.Tk()
+window.title("Kalkulator Bangun Ruang")
+
+# Label untuk memilih bangun ruang
+shape_label = tk.Label(window, text="Pilih Bangun Ruang:")
+shape_label.pack()
+
+# Variabel untuk menyimpan pilihan bangun ruang
+shape_var = tk.StringVar(window)
+shape_var.set("INPUT BANGUN RUANG ")  # Nilai default
+
+# Dropdown menu untuk memilih bangun ruang
+shape_dropdown = tk.OptionMenu(window, shape_var, "Kubus", "Tabung", "Balok", "Bola")
+shape_dropdown.pack()
+
+# Membuat label dan entry untuk panjang sisi kubus
+side_label = tk.Label(window, text="Panjang Sisi (Kubus):")
+side_label.pack()
+side_entry = tk.Entry(window)
+side_entry.pack()
+
+# Membuat label dan entry untuk jari-jari tabung atau bola
+radius_label = tk.Label(window, text="Jari-jari (Tabung/Bola):")
+radius_label.pack()
+radius_entry = tk.Entry(window)
+radius_entry.pack()
+
+# Membuat label dan entry untuk panjang balok
+length_label = tk.Label(window, text="Panjang (Balok):")
+length_label.pack()
+length_entry = tk.Entry(window)
+length_entry.pack()
+
+# Membuat label dan entry untuk lebar balok
+width_label = tk.Label(window, text="Lebar (Balok):")
+width_label.pack()
+width_entry = tk.Entry(window)
+width_entry.pack()
+
+# Membuat label dan entry untuk tinggi tabung, balok, atau bola
+height_label = tk.Label(window, text="Tinggi (Tabung/Balok/Bola):")
+height_label.pack()
+height_entry = tk.Entry(window)
+height_entry.pack()
+
+# Tombol untuk menghitung volume
+calculate_button = tk.Button(window, text="Hitung Volume", command=calculate_volume)
+calculate_button.pack()
+
+# Label untuk menampilkan hasil volume
+result_label = tk.Label(window)
+result_label.pack()
+
+# Tombol untuk menghapus input dan hasil
+clear_button = tk.Button(window, text="Kembali", command=clear_fields)
+clear_button.pack()
+
+# Tombol untuk keluar
+button = tk.Button(window, text="QUIT", command=quit)
+button.pack()
+
+# Menjalankan event loop
+window.mainloop()
